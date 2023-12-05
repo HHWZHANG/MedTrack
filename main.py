@@ -1,7 +1,7 @@
 
 from patient import Patient, Reminder, Medication, Med_db
 
-
+med_db = Med_db()
 patients = []
 
 def find_patient(id):
@@ -23,10 +23,16 @@ def patient_auth():
         print("Register")
         name = input("Enter patient name: ")
         # TODO: patient register
-        patient = Patient(name, ...)
+        sex = input("Enter sex (Male/Female/Other): ")
+        marital_status = input("Enter marital status (Single/Married/Divorced/Widowed): ")
+        dob = input("Enter date of birth (YYYY-MM-DD): ")
+        address = input("Enter address: ")
+        phoneNumber = input("Enter phone number: ")
+        email = input("Enter email: ")
+        patient = Patient(name, sex, marital_status,dob, address, phoneNumber, email)
         patients.append(patient)
         print("Patient added successfully")
-        patient(patient)
+        patient_menu(patient)
     elif choice == "2":
         print("Login")
         id = input("Enter patient ID: ")
@@ -43,11 +49,47 @@ def patient_auth():
         print("Invalid choice")
 
 
-def patient(patient):
-    print(f"Welcome, {patient.name}(ID: {patient.id})")
-    patient.show_reminders()
-    print("Please choose:")
-    #TODO: add more options
+def patient_menu(patient):
+    while True:
+        print(f"Welcome, {patient.name} (ID: {patient.id})")
+        patient.show_reminders()
+        print("Please choose:")
+        print("1. Update Personal Information")
+        print("2. Add Medication")
+        print("3. Remove Medication")
+        print("4. Update Medication")
+        print("5. Add Reminder")
+        print("6. Delete Reminder")
+        print("7. Show All Reminders")
+        print("8. Add Medication to Medication Database")
+        print("9. Logout")
+
+        choice = input("Enter your choice: ").strip()
+
+        if choice == "1":
+            patient.update_patient()
+        elif choice == "2":
+            medication = med_db.search_medication_CLI()
+            patient.add_medication(medication)
+        elif choice == "3":
+            patient.remove_medication()
+        elif choice == "4":
+            patient.update_medication()
+        elif choice == "5":
+            patient.add_reminder()
+        elif choice == "6":
+            patient.delete_reminder()
+        elif choice == "7":
+            patient.show_reminders()
+        elif choice == "8":
+            medication = med_db.add_medication()
+            if medication is not None:
+                print("Medication added successfully")
+        elif choice == "9":
+            print("Logging out...")
+            break
+        else:
+            print("Invalid choice, please try again.")
 
 
 
@@ -56,6 +98,8 @@ def patient(patient):
 print("--------------------")
 print("|     MedTrack     |")
 print("--------------------")
+
+
 
 
 # Choose a role
