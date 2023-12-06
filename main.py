@@ -1,5 +1,5 @@
-
 from patient import Patient, Reminder, Medication, Med_db
+from doctor import Doctor, Prescription, Report, Prescrptn_db
 
 med_db = Med_db()
 patients = []
