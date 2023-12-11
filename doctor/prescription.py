@@ -1,5 +1,5 @@
 # doctor/prescription.py
-import datetime
+from datetime import datetime
 
 class Prescription:
 

@@ -39,11 +39,17 @@ class Patient:
         self.med_array.append(medication)
         return True
     
-    def remove_medication(self, medication):
+    def remove_medication(self):
+        medication = self.select_medication()
+        if medication is None:
+            return False
         self.med_array.remove(medication)
         return True
     
-    def update_medication(self, medication):
+    def update_medication(self):
+        medication = self.select_medication()
+        if medication is None:
+            return False
         medication.update_medication()
         return True
     
@@ -54,7 +60,10 @@ class Patient:
                 return True
         return False
 
-    def add_reminder(self, medication):
+    def add_reminder(self):
+        medication = self.select_medication()
+        if medication is None:
+            return False
         if self.is_medication_exist_in_reminder(medication):
             print("Reminder already exists")
             return False
@@ -69,7 +78,18 @@ class Patient:
         self.reminders.append(reminder)
         return True
     
-    def delete_reminder(self, reminder):
+    def delete_reminder(self):
+        for i, r in enumerate(self.reminders):
+            print(f"{i+1}. {r}")
+        try:
+            reminder_index = int(input("Enter reminder index: "))
+        except ValueError:
+            print("Invalid reminder index")
+            return False
+        if reminder_index > len(self.reminders) or reminder_index < 1:
+            print("Invalid reminder index")
+            return False
+        reminder = self.reminders[reminder_index-1]
         self.reminders.remove(reminder)
         return True
     
@@ -80,5 +100,25 @@ class Patient:
         print("-"*(20+len("Today's Reminder")), sep="")
         return True
         
-
+    def show_medication_with_index(self):
+        if len(self.med_array) == 0:
+            print("No medications found")
+            return False
+        for i, med in enumerate(self.med_array):
+            print(f"{i+1}. {med}")
+        return True
+    
+    def select_medication(self):
+        if self.show_medication_with_index():
+            try:
+                medication_index = int(input("Enter medication index: "))
+            except ValueError:
+                print("Invalid medication index")
+                return None
+            if medication_index > len(self.med_array) or medication_index < 1:
+                print("Invalid medication index")
+                return None
+            return self.med_array[medication_index-1]
+        else:
+            return None
     

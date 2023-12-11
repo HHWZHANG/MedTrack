@@ -1,8 +1,13 @@
+# doctor/__init__.py
+
+current_did = 0
+
+
 class Doctor:
     def __init__(self, name, address, email, phoneNumber):
-        global current_id
-        current_id += 1
-        self.id = current_id
+        global current_did
+        current_did += 1
+        self.id = current_did
         self.name = name
         self.address = address
         self.email = email

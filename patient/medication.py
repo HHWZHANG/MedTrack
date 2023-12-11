@@ -67,3 +67,53 @@ class Med_db(Medication):
             choice = input("Enter your choice: ")
             choice = int(choice)
             return med_ret_list[choice-1]
+        
+    # def del_medication(self):
+    #     print("Remove Medication")
+    #     medication_name = input("Enter the name of the medication to remove: ")
+
+    #     # Find the medication by name
+    #     medication_to_remove = None
+    #     for med in self.med_array:
+    #         if med.name.lower() == medication_name.lower():
+    #             medication_to_remove = med
+    #             break
+
+    #     # Remove the medication if found
+    #     if medication_to_remove:
+    #         self.med_array.remove(medication_to_remove)
+    #         print(f"Medication '{medication_name}' removed successfully.")
+    #         return True
+    #     else:
+    #         print(f"Medication '{medication_name}' not found.")
+    #         return False
+        
+    # def update_medication_for_patient(self):
+    #     if not patient.med_array:
+    #         print("No medications found.")
+    #         return
+
+    #     print("Select a medication to update:")
+    #     for idx, medication in enumerate(patient.med_array, 1):
+    #         print(f"{idx}. {medication}")
+
+    #     choice = int(input("Enter the number of the medication to update: ")) - 1
+
+    #     if 0 <= choice < len(patient.med_array):
+    #         selected_medication = patient.med_array[choice]
+
+    #         # Get updated medication details
+    #         new_med_type = input(f"Enter new medication type (current: {selected_medication.med_type}): ") or selected_medication.med_type
+    #         new_strength = input(f"Enter new medication strength (current: {selected_medication.strength}): ") or selected_medication.strength
+    #         new_frequency = input(f"Enter new frequency of intake (current: {selected_medication.frequency}): ") or selected_medication.frequency
+
+    #         # Update medication details
+    #         selected_medication.med_type = new_med_type
+    #         selected_medication.strength = new_strength
+    #         selected_medication.frequency = new_frequency
+
+    #         print("Medication updated successfully.")
+    #     else:
+    #         print("Invalid selection. Please try again.")
+            
+        

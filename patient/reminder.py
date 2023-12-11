@@ -21,12 +21,11 @@ class Reminder:
     def show_reminder(self):
         if not self.taken and self.start_date <= datetime.now() <= self.end_date:
             if (datetime.now() - self.start_date).days % self.repeat == 0:
-                print(f"{self.medication.name} at {self.time}")
+                print(f"{self.medication.name} at {self.time.strftime('%H:%M')}")
                 return True
         return False
 
     def taken_reminder(self):
         self.taken = True
         return True
-
-
+    
