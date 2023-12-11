@@ -1,6 +1,5 @@
-
 from patient import Patient, Reminder, Medication, Med_db
-from doctor import Doctor
+from doctor import Doctor, Prescription, Report, Prescrptn_db
 
 med_db = Med_db()
 patients = []
@@ -92,7 +91,48 @@ def patient_menu(patient):
         else:
             print("Invalid choice, please try again.")
 
+doctors = []
 
+def find_doctor(id):
+    for doctor in doctors:
+        if doctor.id == id:
+            return doctor
+    return None
+
+def doctor_auth():
+    print("You are a doctor")
+    print("Please choose:")
+    print("1. Register")
+    print("2. Login")
+    print("3. Exit")
+    choice = input("Enter your choice: ")
+    choice = choice.strip().lower()
+    if choice == "1":
+        print("Register")
+        name = input("Enter doctor name: ")
+        # TODO: doctor register
+        doctor = Doctor(name, ...)
+        doctors.append(doctor)
+        print("Doctor added successfully")
+        doctor(doctor)
+    elif choice == "2":
+        print("Login")
+        id = input("Enter doctor ID: ")
+        doctor = find_doctor(id)
+        if doctor is not None:
+            doctor(doctor)
+        else:
+            print("Invalid ID, please try again")
+            doctor_auth()
+    elif choice == "3":
+        print("Exit")
+        return
+    else:
+        print("Invalid choice")
+
+def doctor(doctor):
+    print(f"Welcome, {doctor.name}(ID: {doctor.id})")
+    print("Please choose:")
 
 
 
@@ -108,3 +148,5 @@ role = input("Choose a role (patient/doctor): ")
 role = role.strip().lower()
 if role in ["patient", "p"]:
     patient_auth()
+if role in ["doctor", "d"]:
+    doctor_auth()
