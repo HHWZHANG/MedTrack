@@ -41,14 +41,16 @@ class Prescription:
         return True
 
     def expiry_alert(self, threshold_days=7):
-        current_date = datetime.now().date()
+        current_date = datetime.now()
         days_until_expiry = (self.expiry_date - current_date).days
 
         if days_until_expiry <= threshold_days:
             print(f"Prescription with ID {self.rx_id} for medication '{self.med_name}' is expiring soon. "
                   f"Expiry Date: {self.expiry_date}, Days Left: {days_until_expiry}")
+            return True
         else:
             print("Prescription is still valid.")
+            return False
 
 
 class Prescrptn_db(Prescription):

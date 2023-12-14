@@ -10,7 +10,7 @@ class Report:
     def __str__(self):
         return f"Medical Report for Patient ID {self.patient_id} (Timestamp: {self.timestamp}): {self.report_text}"
 
-    def generate_report(self):
+    def generate_report(self, Prescrptn_db):
         prescription_history = []
 
         for prescription in Prescrptn_db.prescrptn_array:
@@ -37,14 +37,16 @@ class Report:
         self.report_text = report_content
 
 
-    sample_drug_interaction_pairs = {("Aspirin", "Ibuprofen"): "Increased risk of gastrointestinal bleeding",
+    
+
+    def check_drug_interactions(self, Prescrptn_db):
+        sample_drug_interaction_pairs = {("Aspirin", "Ibuprofen"): "Increased risk of gastrointestinal bleeding",
                                      ("Ibuprofen", "Paracetamol"): "Possible kidney damage"}
 
-    def check_drug_interactions(self):
         interactions = []
 
         valid_prescriptions = [prescription for prescription in Prescrptn_db.prescrptn_array
-                               if prescription.expiry_date >= datetime.date.today()
+                               if prescription.expiry_date >= datetime.datetime.now()
                                and prescription.patient_id == self.patient_id]
 
         # Check interactions between all pairs of valid prescriptions
@@ -59,7 +61,7 @@ class Report:
 
         return interactions
 
-    def search_medication_history(self, medication_name):
+    def search_medication_history(self, medication_name, Prescrptn_db):
         medication_records = []
 
         for prescription in Prescrptn_db.prescrptn_array:

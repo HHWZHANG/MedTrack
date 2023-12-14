@@ -1,13 +1,12 @@
 import unittest
 import unittest.mock
 from doctor import Doctor
+from doctor.report import Report
 from doctor.prescription import Prescription, Prescrptn_db
 from unittest.mock import patch
 from datetime import datetime, timedelta
 
 class TestDoctor(unittest.TestCase):
-
-    
 
     def setUp(self):
         self.doctor = Doctor("Dr. House", "123 Street", "house@example.com", "1234567890")
@@ -29,6 +28,7 @@ class TestDoctor(unittest.TestCase):
         self.assertEqual(self.doctor.email, "house@example.com")
         self.assertEqual(self.doctor.phoneNumber, "1234567890")
 
+    
     def test_str(self):
         expected_str = "Doctor(id:2, name:'Dr. House', address:'123 Street', email:'house@example.com', phoneNumber:'1234567890')"
         self.assertEqual(str(self.doctor), expected_str)
@@ -79,6 +79,11 @@ class TestPrescription(unittest.TestCase):
         self.assertEqual(self.prescription.frequency, "BID")
         self.assertEqual(self.prescription.expiry_date, datetime.strptime("2023-12-31", "%Y-%m-%d"))
 
+    def test_expiry_alert(self):
+        self.assertEqual(self.prescription.expiry_alert(), False)
+        self.prescription.expiry_date = datetime.now() + timedelta(days=7)
+        self.assertEqual(self.prescription.expiry_alert(8), True)
+
 class TestPrescrptn_db(unittest.TestCase):
 
     def setUp(self):
@@ -109,6 +114,56 @@ class TestPrescrptn_db(unittest.TestCase):
     def test_remove_prescription(self):
         self.db.remove_prescription(self.prescription)
         self.assertFalse(self.db.is_exist("RX001"))
+
+class TestReport(unittest.TestCase):
+
+    def setUp(self):
+        self.report = Report("P001", "Report content")
+        self.prescription = Prescription("RX001", "P001", "D001", "Medicine", "50mg", "daily", datetime.now(), datetime.now() + timedelta(days=10))
+        self.pre_db = Prescrptn_db()
+        self.pre_db.prescrptn_array.append(self.prescription)
+
+    def tearDown(self):
+        self.pre_db.prescrptn_array = []
+
+    def test_init(self):
+        self.assertEqual(self.report.patient_id, "P001")
+        self.assertEqual(self.report.report_text, "Report content")
+
+    def test_str(self):
+        expected_str = f"Medical Report for Patient ID {self.report.patient_id} (Timestamp: {self.report.timestamp}): {self.report.report_text}"
+        self.assertEqual(str(self.report), expected_str)
+
+    def test_generate_report(self):
+        self.report.generate_report(self.pre_db)
+        expected_report_content = f"Prescription History for Patient ID {self.report.patient_id}:\n"
+        expected_report_content += "---------------------------------------------------------\n"
+        expected_report_content += f"Prescription ID: {self.prescription.rx_id}\n"
+        expected_report_content += f"Medication Name: {self.prescription.med_name}\n"
+        expected_report_content += f"Strength: {self.prescription.strength}\n"
+        expected_report_content += f"Frequency: {self.prescription.frequency}\n"
+        expected_report_content += f"Date: {self.prescription.date}\n"
+        expected_report_content += f"Expiry Date: {self.prescription.expiry_date}\n"
+        expected_report_content += "---------------------------------------------------------\n"
+        self.assertEqual(self.report.report_text, expected_report_content)
+
+    def test_check_drug_interactions(self):
+        prescription2 = Prescription("RX002", "P001", "D001", "Aspirin", "100mg", "BID", datetime.now(), datetime.now() + timedelta(days=10))
+        prescription3 = Prescription("RX003", "P001", "D001", "Ibuprofen", "200mg", "TID", datetime.now(), datetime.now() + timedelta(days=10))
+        self.pre_db.prescrptn_array.append(prescription2)
+        self.pre_db.prescrptn_array.append(prescription3)
+        interactions = self.report.check_drug_interactions(self.pre_db)
+        self.assertEqual(len(interactions), 1)
+        self.assertEqual(interactions[0][0], ("Aspirin", "Ibuprofen"))
+        self.assertEqual(interactions[0][1], "Increased risk of gastrointestinal bleeding")
+
+    def test_search_medication_history(self):
+        medication_records = self.report.search_medication_history("Medicine", self.pre_db)
+        self.assertEqual(len(medication_records), 1)
+        self.assertEqual(medication_records[0]['Prescription_ID'], "RX001")
+        self.assertEqual(medication_records[0]['Medication_Name'], "Medicine")
+        self.assertEqual(medication_records[0]['Strength'], "50mg")
+        self.assertEqual(medication_records[0]['Frequency'], "daily")
 
 
 if __name__ == '__main__':
