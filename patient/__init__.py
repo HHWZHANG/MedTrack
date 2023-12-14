@@ -67,15 +67,20 @@ class Patient:
         if self.is_medication_exist_in_reminder(medication):
             print("Reminder already exists")
             return False
-        time_input = input("Enter time of reminder (e.g., 10:00): ")
-        time = datetime.strptime(time_input, "%H:%M")
-        repeat = int(input("Enter repeat interval (in days): "))
-        start_date_input = input("Enter start date (e.g., 2020-01-01): ")
-        start_date = datetime.strptime(start_date_input, "%Y-%m-%d")
-        end_date_input = input("Enter end date (e.g., 2020-01-01): ")
-        end_date = datetime.strptime(end_date_input, "%Y-%m-%d")
-        reminder = Reminder(medication, time, repeat, start_date, end_date)
-        self.reminders.append(reminder)
+
+        try:
+            time_input = input("Enter time of reminder (e.g., 10:00): ")
+            time = datetime.strptime(time_input, "%H:%M")
+            repeat = int(input("Enter repeat interval (in days): "))
+            start_date_input = input("Enter start date (e.g., 2020-01-01): ")
+            start_date = datetime.strptime(start_date_input, "%Y-%m-%d")
+            end_date_input = input("Enter end date (e.g., 2020-01-01): ")
+            end_date = datetime.strptime(end_date_input, "%Y-%m-%d")
+            reminder = Reminder(medication, time, repeat, start_date, end_date)
+            self.reminders.append(reminder)
+        except ValueError as v:
+            print(v)
+            return False
         return True
     
     def delete_reminder(self):

@@ -1,4 +1,6 @@
 # doctor/__init__.py
+from .prescription import Prescription, Prescrptn_db
+from .report import Report
 
 current_did = 0
 

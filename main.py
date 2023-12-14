@@ -17,9 +17,15 @@ def patient_auth():
     print("1. Register")
     print("2. Login")
     print("3. Exit")
-    choice = input("Enter your choice: ")
-    choice = choice.strip().lower()
-    if choice == "1":
+    try:
+        choice = int(input("Enter your choice: "))
+        if choice not in [1,2,3]:
+            raise ValueError
+    except ValueError:
+        print("Please input right number")
+        patient_auth()
+
+    if choice == 1:
         print("Register")
         name = input("Enter patient name: ")
         # TODO: patient register
@@ -33,7 +39,7 @@ def patient_auth():
         patients.append(patient)
         print("Patient added successfully")
         patient_menu(patient)
-    elif choice == "2":
+    elif choice == 2:
         print("Login")
         id = input("Enter patient ID: ")
         patient = find_patient(id)
@@ -42,7 +48,7 @@ def patient_auth():
         else:
             print("Invalid ID, please try again")
             patient_auth()
-    elif choice == "3":
+    elif choice == 3:
         print("Exit")
         return
     else:
@@ -63,29 +69,34 @@ def patient_menu(patient):
         print("7. Show All Reminders")
         print("8. Add Medication to Medication Database")
         print("9. Logout")
+        try:
+            choice = int(input("Enter your choice: "))
+            if choice not in [1,2,3,4,5,6,7,8,9]:
+                raise ValueError
+        except ValueError:
+            print("Please input right number for choice")
+            continue
 
-        choice = input("Enter your choice: ").strip()
-
-        if choice == "1":
+        if choice == 1:
             patient.update_patient()
-        elif choice == "2":
+        elif choice == 2:
             medication = med_db.search_medication_CLI()
             patient.add_medication(medication)
-        elif choice == "3":
+        elif choice == 3:
             patient.remove_medication()
-        elif choice == "4":
+        elif choice == 4:
             patient.update_medication()
-        elif choice == "5":
+        elif choice == 5:
             patient.add_reminder()
-        elif choice == "6":
+        elif choice == 6:
             patient.delete_reminder()
-        elif choice == "7":
+        elif choice == 7:
             patient.show_reminders()
-        elif choice == "8":
+        elif choice == 8:
             medication = med_db.add_medication()
             if medication is not None:
                 print("Medication added successfully")
-        elif choice == "9":
+        elif choice == 9:
             print("Logging out...")
             break
         else:
@@ -105,9 +116,14 @@ def doctor_auth():
     print("1. Register")
     print("2. Login")
     print("3. Exit")
-    choice = input("Enter your choice: ")
-    choice = choice.strip().lower()
-    if choice == "1":
+    try:
+        choice = int(input("Enter your choice: "))
+        if choice not in [1,2,3]:
+            raise ValueError
+    except ValueError:
+        print("Please input right number")
+        doctor_auth()
+    if choice == 1:
         print("Register")
         name = input("Enter doctor name: ")
         # TODO: doctor register
@@ -115,7 +131,7 @@ def doctor_auth():
         doctors.append(doctor)
         print("Doctor added successfully")
         doctor(doctor)
-    elif choice == "2":
+    elif choice == 2:
         print("Login")
         id = input("Enter doctor ID: ")
         doctor = find_doctor(id)
@@ -124,7 +140,7 @@ def doctor_auth():
         else:
             print("Invalid ID, please try again")
             doctor_auth()
-    elif choice == "3":
+    elif choice == 3:
         print("Exit")
         return
     else:
