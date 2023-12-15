@@ -168,3 +168,17 @@ class TestReport(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+a="1"
+b=2
+try:
+    print(int(a)+b)
+except TypeError:
+    print("TypeError")
+except ValueError:
+    print("valueerror")
+except:
+    print('other error')
+else:
+    print("no error")

@@ -6,8 +6,8 @@ install:
   - pip install -r requirements.txt
 
 script:
-  - python doctor_test.py
-  - python patient_test.py
+  - python test_doctor.py
+  - python test_patient.py
 
 branches:
   only:
