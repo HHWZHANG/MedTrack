@@ -106,9 +106,9 @@ class TestPrescrptn_db(unittest.TestCase):
         self.assertTrue(self.db.is_exist("RX001"))
         self.assertFalse(self.db.is_exist("RX002"))
 
-    @patch('builtins.input', side_effect=["RX002", "P002", "D002", "Medicine2", "100mg", "BID", "2023-12-31"])
-    def test_add_prescription(self, input):
-        self.db.add_prescription()
+    def test_add_prescription(self):
+        with unittest.mock.patch('builtins.input', side_effect=["RX002", "P002", "D002", "Medicine2", "100mg", "BID", "2023-12-31"]):
+            self.db.add_prescription()
         self.assertTrue(self.db.is_exist("RX002"))
 
     def test_remove_prescription(self):
@@ -170,15 +170,4 @@ if __name__ == '__main__':
     unittest.main()
 
 
-a="1"
-b=2
-try:
-    print(int(a)+b)
-except TypeError:
-    print("TypeError")
-except ValueError:
-    print("valueerror")
-except:
-    print('other error')
-else:
-    print("no error")
+

@@ -62,7 +62,7 @@ class Prescrptn_db(Prescription):
         for prescrptn in self.prescrptn_array:
             if prescrptn.rx_id == rx_id:
                 return True
-            return False
+        return False
 
     def add_prescription(self):
         rx_id = input("Enter prescription ID (start with RX): ")

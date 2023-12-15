@@ -1,8 +1,8 @@
 
 import unittest
 import unittest.mock
-from medication import Medication
-from reminder import Reminder
+from patient.reminder import Reminder
+from patient import Patient
 from patient.medication import Medication, Med_db
 from unittest.mock import patch
 from datetime import datetime, timedelta
@@ -54,19 +54,19 @@ class TestPatient(unittest.TestCase):
         self.assertIn(medication, self.patient.med_array)
 
     def test_remove_medication(self):
-    medication = Medication("Paracetamol", "Tablet", "500mg", "Daily", False)
-    self.patient.add_medication(medication)
-    with patch('patient.Patient.select_medication', return_value=medication):
-        self.patient.remove_medication()
-    self.assertNotIn(medication, self.patient.med_array)
+        medication = Medication("Paracetamol", "Tablet", "500mg", "Daily", False)
+        self.patient.add_medication(medication)
+        with patch('patient.Patient.select_medication', return_value=medication):
+            self.patient.remove_medication()
+        self.assertNotIn(medication, self.patient.med_array)
 
     def test_update_medication(self):
-    medication = Medication("Paracetamol", "Tablet", "500mg", "Daily", False)
-    self.patient.add_medication(medication)
-    with patch('patient.Patient.select_medication', return_value=medication):
-        with patch('medication.Medication.update_medication') as mock_update:
-            self.patient.update_medication()
-    mock_update.assert_called_once()
+        medication = Medication("Paracetamol", "Tablet", "500mg", "Daily", False)
+        self.patient.add_medication(medication)
+        with patch('patient.Patient.select_medication', return_value=medication):
+            with patch('patient.medication.Medication.update_medication') as mock_update:
+                self.patient.update_medication()
+        mock_update.assert_called_once()
 
     @patch('builtins.input', side_effect=["10:00", 1, "2023-01-01", "2023-01-10"])
     def test_add_reminder(self, mock_inputs):

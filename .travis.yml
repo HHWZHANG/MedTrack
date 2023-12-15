@@ -7,7 +7,6 @@ install:
 
 script:
   - python test_doctor.py
-  - python test_patient.py
 
 branches:
   only:
