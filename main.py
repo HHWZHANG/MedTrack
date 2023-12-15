@@ -1,5 +1,5 @@
 from patient import Patient, Reminder, Medication, Med_db
-from doctor import Doctor, Prescription, Report, Prescrptn_db
+from doctor import Doctor, Prescription,  Prescrptn_db,Report
 
 med_db = Med_db()
 patients = []
@@ -102,6 +102,9 @@ def patient_menu(patient):
         else:
             print("Invalid choice, please try again.")
 
+
+prescrptn_db=Prescrptn_db()
+
 doctors = []
 
 def find_doctor(id):
@@ -127,10 +130,13 @@ def doctor_auth():
         print("Register")
         name = input("Enter doctor name: ")
         # TODO: doctor register
-        doctor = Doctor(name, ...)
+        address = input("Enter address: ")
+        email = input("Enter email: ")
+        phoneNumber =input("Enter phone number: ")
+        doctor = Doctor(name, address, email, phoneNumber)
         doctors.append(doctor)
         print("Doctor added successfully")
-        doctor(doctor)
+        doctor_menu(doctor)
     elif choice == 2:
         print("Login")
         id = input("Enter doctor ID: ")
@@ -146,10 +152,49 @@ def doctor_auth():
     else:
         print("Invalid choice")
 
-def doctor(doctor):
-    print(f"Welcome, {doctor.name}(ID: {doctor.id})")
-    print("Please choose:")
-
+def doctor_menu(doctor):
+    while True:
+        print(f"Welcome, {doctor.name}(ID: {doctor.id})")
+        print("Please choose:")
+        print("1. add new prescriptions")
+        print("2. delet prescriptions")
+        print("3. warning expiration")
+        print("4. Check for interactions between medications")
+        print("5. Export the medication history of a patient")
+        print("6. Search for a patient's medication records")
+        print("7. Logout")
+        try:
+            choice = int(input("Enter your choice: "))
+            if choice not in [1,2,3,4,5,6]:
+                raise ValueError
+        except ValueError:
+            print("Please input right number for choice")
+            continue
+        if choice == 1:
+            prescrptn_db.add_prescription()
+        elif choice == 2:
+            prescrptn=input("please input prescrptn you want remove：")
+            prescrptn_db.remove_prescription(prescrptn)
+        elif choice == 3:
+            prescrptn_db.warning()
+        elif choice == 4:
+            ID=input("please input patient id")
+            report1=Report(ID,"")
+            report1.check_drug_interactions(prescrptn_db)
+        elif choice == 5:
+            ID = input("please input patient id")
+            report2 = Report(ID, "")
+            report2.generate_report(prescrptn_db)
+        elif choice == 6:
+            ID = input("please input patient id")
+            med_name=input("please int medicine name")
+            report3 = Report(ID, "")
+            report3.search_medication_history(med_name,prescrptn_db)
+        elif choice == 7:
+            print("Logging out...")
+            break
+        else:
+            print("Invalid choice, please try again.")
 
 
 print("--------------------")

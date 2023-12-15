@@ -15,7 +15,7 @@ class Reminder:
 
     def __str__(self):
         taken_status = "Taken" if self.taken else "Not taken yet"
-        return f"Reminder for {self.medication_name} at {self.time}. Status: {taken_status}"
+        return f"Reminder for {self.medication.name} at {self.time}. Status: {taken_status}"
 
 
     def show_reminder(self):
@@ -28,4 +28,3 @@ class Reminder:
     def taken_reminder(self):
         self.taken = True
         return True
-    

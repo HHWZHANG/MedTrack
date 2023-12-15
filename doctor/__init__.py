@@ -16,12 +16,15 @@ class Doctor:
         self.phoneNumber = phoneNumber
 
     def __str__(self):
-        return f"Doctor(id:{self.id}, name:'{self.name}', address:'{self.address}', " \
-               f"email:'{self.email}', phoneNumber:'{self.phoneNumber}')"
+        return f"{self.id}-{self.name} {self.address} {self.email} {self.phoneNumber} "
 
-    def update_doctor(self):
-        self.name = input("New doctor name: ") or self.name
-        self.address = input("New address: ") or self.address
-        self.phoneNumber = input("New phone number: ") or self.phoneNumber
-        self.email = input("New email: ") or self.email
+    def update_doctor(self, new_name=None, new_address=None, new_phoneNumber=None, new_email=None):
+        if new_name is not None:
+            self.name = new_name
+        if new_address is not None:
+            self.address = new_address
+        if new_email is not None:
+            self.email = new_email
+        if new_phoneNumber is not None:
+            self.phoneNumber = new_phoneNumber
         return True

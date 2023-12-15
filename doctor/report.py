@@ -12,9 +12,10 @@ class Report:
 
     def generate_report(self, Prescrptn_db):
         prescription_history = []
-
+        flag=True
         for prescription in Prescrptn_db.prescrptn_array:
             if prescription.patient_id == self.patient_id:
+                flag=False
                 prescription_history.append({
                     'Prescription_ID': prescription.rx_id,
                     'Medication_Name': prescription.med_name,
@@ -23,7 +24,8 @@ class Report:
                     'Date': prescription.date,
                     'Expiry_Date': prescription.expiry_date
                 })
-
+        if flag==True:
+            print("have no prsccrptn existed")
         report_content = f"Prescription History for Patient ID {self.patient_id}:\n"
         report_content += "---------------------------------------------------------\n"
         for entry in prescription_history:
@@ -50,6 +52,7 @@ class Report:
                                and prescription.patient_id == self.patient_id]
 
         # Check interactions between all pairs of valid prescriptions
+        flag=True
         for i in range(len(valid_prescriptions)):
             for j in range(i + 1, len(valid_prescriptions)):
                 drug_pair = (valid_prescriptions[i].med_name, valid_prescriptions[j].med_name)
@@ -58,14 +61,17 @@ class Report:
                 if drug_pair in sample_drug_interaction_pairs:
                     interaction_description = sample_drug_interaction_pairs[drug_pair]
                     interactions.append((drug_pair, interaction_description))
-
+                    flag=False
+        if flag==True:
+            print("no prescrtn have interactions ")
         return interactions
 
     def search_medication_history(self, medication_name, Prescrptn_db):
         medication_records = []
-
+        flag=True
         for prescription in Prescrptn_db.prescrptn_array:
             if prescription.patient_id == self.patient_id and prescription.med_name == medication_name:
+                flag=False
                 medication_records.append({
                     'Prescription_ID': prescription.rx_id,
                     'Medication_Name': prescription.med_name,
@@ -74,5 +80,6 @@ class Report:
                     'Date': prescription.date,
                     'Expiry_Date': prescription.expiry_date
                 })
-
+        if flag==True:
+            print("this medicine don't exist")
         return medication_records

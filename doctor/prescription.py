@@ -82,6 +82,25 @@ class Prescrptn_db(Prescription):
         self.prescrptn_array.append(prescription)
         return prescription
 
-    def remove_prescription(self, prescription):
-        self.prescrptn_array.remove(prescription)
+    def remove_prescription(self, n):
+        for prescription in self.prescrptn_array:
+            if prescription.rx_id==n:
+                self.prescrptn_array.remove(prescription)
+                print(f"prescription:{prescription.rx_id}has been removed")
+            else:
+                print("prescription not exist")
         return True
+
+    def warning(self):
+        date_input = input("Enter now time (yyyy-mm-dd): ")
+        now_time = datetime.strptime(date_input, "%Y-%m-%d")
+        flag=True
+        for prescrptn in self.prescrptn_array:
+            if prescrptn.expiry_date < now_time:
+                flag=False
+                print(f"prescrptn:{prescrptn.rx_id} expiry")
+                print("")
+        if flag==True:
+            print("have no prescrptn expiry")
+
+

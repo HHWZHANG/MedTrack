@@ -6,6 +6,7 @@ from doctor.prescription import Prescription, Prescrptn_db
 from unittest.mock import patch
 from datetime import datetime, timedelta
 
+
 class TestDoctor(unittest.TestCase):
 
     def setUp(self):
@@ -14,10 +15,10 @@ class TestDoctor(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         return super().setUpClass()
-    
+
     def tearDown(self):
         return super().tearDown()
-    
+
     @classmethod
     def tearDownClass(cls):
         return super().tearDownClass()
@@ -28,38 +29,36 @@ class TestDoctor(unittest.TestCase):
         self.assertEqual(self.doctor.email, "house@example.com")
         self.assertEqual(self.doctor.phoneNumber, "1234567890")
 
-    
     def test_str(self):
-        expected_str = "Doctor(id:2, name:'Dr. House', address:'123 Street', email:'house@example.com', phoneNumber:'1234567890')"
+        expected_str = "2-Dr. House 123 Street house@example.com 1234567890 "
         self.assertEqual(str(self.doctor), expected_str)
 
     def test_update_doctor(self):
-        with unittest.mock.patch('builtins.input', side_effect=["Dr. Watson", "456 Avenue", "7890123456", "watson@example.com"]):
-            self.doctor.update_doctor()
+        with unittest.mock.patch('builtins.input',
+                                 side_effect=["Dr. Watson", "456 Avenue", "7890123456", "watson@example.com"]):
+            self.doctor.update_doctor("Dr. Watson", "456 Avenue", "7890123456", "watson@example.com")
         self.assertEqual(self.doctor.name, "Dr. Watson")
         self.assertEqual(self.doctor.address, "456 Avenue")
         self.assertEqual(self.doctor.phoneNumber, "7890123456")
         self.assertEqual(self.doctor.email, "watson@example.com")
 
 
-
-
-
 class TestPrescription(unittest.TestCase):
     def setUp(self):
-        self.prescription = Prescription("RX001", "P001", "D001", "Medicine", "50mg", "daily", datetime.now(), datetime.now() + timedelta(days=10))
+        self.prescription = Prescription("RX001", "P001", "D001", "Medicine", "50mg", "daily", datetime.now(),
+                                         datetime.now() + timedelta(days=10))
 
     @classmethod
     def setUpClass(cls):
         return super().setUpClass()
-    
+
     def tearDown(self):
         return super().tearDown()
-    
+
     @classmethod
     def tearDownClass(cls):
         return super().tearDownClass()
-    
+
     def test_init(self):
         self.assertEqual(self.prescription.rx_id, "RX001")
         self.assertEqual(self.prescription.patient_id, "P001")
@@ -84,20 +83,22 @@ class TestPrescription(unittest.TestCase):
         self.prescription.expiry_date = datetime.now() + timedelta(days=7)
         self.assertEqual(self.prescription.expiry_alert(8), True)
 
+
 class TestPrescrptn_db(unittest.TestCase):
 
     def setUp(self):
         self.db = Prescrptn_db()
-        self.prescription = Prescription("RX001", "P001", "D001", "Medicine", "50mg", "daily", datetime.now(), datetime.now() + timedelta(days=10))
+        self.prescription = Prescription("RX001", "P001", "D001", "Medicine", "50mg", "daily", datetime.now(),
+                                         datetime.now() + timedelta(days=10))
         self.db.prescrptn_array.append(self.prescription)
-    
+
     @classmethod
     def setUpClass(cls):
         return super().setUpClass()
-    
+
     def tearDown(self):
         return super().tearDown()
-    
+
     @classmethod
     def tearDownClass(cls):
         return super().tearDownClass()
@@ -107,19 +108,22 @@ class TestPrescrptn_db(unittest.TestCase):
         self.assertFalse(self.db.is_exist("RX002"))
 
     def test_add_prescription(self):
-        with unittest.mock.patch('builtins.input', side_effect=["RX002", "P002", "D002", "Medicine2", "100mg", "BID", "2023-12-31"]):
+        with unittest.mock.patch('builtins.input',
+                                 side_effect=["RX002", "P002", "D002", "Medicine2", "100mg", "BID", "2023-12-31"]):
             self.db.add_prescription()
         self.assertTrue(self.db.is_exist("RX002"))
 
     def test_remove_prescription(self):
-        self.db.remove_prescription(self.prescription)
+        self.db.remove_prescription(self.prescription.rx_id)
         self.assertFalse(self.db.is_exist("RX001"))
+
 
 class TestReport(unittest.TestCase):
 
     def setUp(self):
         self.report = Report("P001", "Report content")
-        self.prescription = Prescription("RX001", "P001", "D001", "Medicine", "50mg", "daily", datetime.now(), datetime.now() + timedelta(days=10))
+        self.prescription = Prescription("RX001", "P001", "D001", "Medicine", "50mg", "daily", datetime.now(),
+                                         datetime.now() + timedelta(days=10))
         self.pre_db = Prescrptn_db()
         self.pre_db.prescrptn_array.append(self.prescription)
 
@@ -148,8 +152,10 @@ class TestReport(unittest.TestCase):
         self.assertEqual(self.report.report_text, expected_report_content)
 
     def test_check_drug_interactions(self):
-        prescription2 = Prescription("RX002", "P001", "D001", "Aspirin", "100mg", "BID", datetime.now(), datetime.now() + timedelta(days=10))
-        prescription3 = Prescription("RX003", "P001", "D001", "Ibuprofen", "200mg", "TID", datetime.now(), datetime.now() + timedelta(days=10))
+        prescription2 = Prescription("RX002", "P001", "D001", "Aspirin", "100mg", "BID", datetime.now(),
+                                     datetime.now() + timedelta(days=10))
+        prescription3 = Prescription("RX003", "P001", "D001", "Ibuprofen", "200mg", "TID", datetime.now(),
+                                     datetime.now() + timedelta(days=10))
         self.pre_db.prescrptn_array.append(prescription2)
         self.pre_db.prescrptn_array.append(prescription3)
         interactions = self.report.check_drug_interactions(self.pre_db)
