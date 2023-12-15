@@ -1,0 +1,62 @@
+卷 Windows-SSD 的文件夹 PATH 列表
+卷序列号为 90F1-3280
+C:.
+│  .coverage
+│  .DS_Store
+│  .travis.yml
+│  cover.png
+│  DATA533projectstep1.pdf
+│  list.txt
+│  main.py
+│  README.md
+│  requirements.txt
+│  test_doctor.py
+│  test_patient.py
+│  TravisCI.png
+│  
+├─doctor
+│  │  prescription.py
+│  │  report.py
+│  │  __init__.py
+│  │  
+│  └─__pycache__
+│          prescription.cpython-310.pyc
+│          prescription.cpython-311.pyc
+│          report.cpython-310.pyc
+│          report.cpython-311.pyc
+│          __init__.cpython-310.pyc
+│          __init__.cpython-311.pyc
+│          
+├─htmlcov
+│      .gitignore
+│      coverage_html.js
+│      d_94ebea187450f41a_prescription_py.html
+│      d_94ebea187450f41a_report_py.html
+│      d_94ebea187450f41a___init___py.html
+│      d_a2ec2ab9c9c4b431_medication_py.html
+│      d_a2ec2ab9c9c4b431_reminder_py.html
+│      d_a2ec2ab9c9c4b431___init___py.html
+│      favicon_32.png
+│      index.html
+│      keybd_closed.png
+│      keybd_open.png
+│      status.json
+│      style.css
+│      
+├─patient
+│  │  medication.py
+│  │  reminder.py
+│  │  __init__.py
+│  │  
+│  └─__pycache__
+│          medication.cpython-310.pyc
+│          medication.cpython-311.pyc
+│          reminder.cpython-310.pyc
+│          reminder.cpython-311.pyc
+│          __init__.cpython-310.pyc
+│          __init__.cpython-311.pyc
+│          
+└─__pycache__
+        test_doctor.cpython-310.pyc
+        test_doctor.cpython-311.pyc
+        

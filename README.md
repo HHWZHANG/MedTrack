@@ -4,7 +4,32 @@
 
 A software package named "MedTrack App". This app is designed to assist patients in managing their medication regimen. It provides a comprehensive solution for managing medication schedules, prescription details, and drug interactions, benefiting patients and doctors. It emphasizes user-friendly interfaces and reminders, ensuring effective medication management and adherence to prescribed treatments.
 
-
+### Table of content:
+```
+│  .coverage
+│  .DS_Store
+│  .travis.yml
+│  cover.png
+│  DATA533projectstep1.pdf
+│  list.txt
+│  main.py
+│  README.md
+│  requirements.txt
+│  test_doctor.py
+│  test_patient.py
+│  TravisCI.png
+│
+├─doctor
+│  │  prescription.py
+│  │  report.py
+│  │  __init__.py
+│  │
+│
+├─patient
+│  │  medication.py
+│  │  reminder.py
+│  │  __init__.py
+```
 
 ### Features
 Patient Registration and Login: Secure registration and login system for patients.
@@ -29,6 +54,15 @@ Export_history: Exports the medication history of a patient.
 
 Search_history: Searches through the medication history.
 
+
+
+
+### TravisCI
+
+[![Build Status](https://app.travis-ci.com/HHWZHANG/MedTrack.svg?branch=main)](https://app.travis-ci.com/HHWZHANG/MedTrack)
+
+### Coverage
+![image](./cover.png)
 
 ### Authors
 Hanwen Zhang
