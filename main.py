@@ -157,15 +157,15 @@ def doctor_menu(doctor):
         print(f"Welcome, {doctor.name}(ID: {doctor.id})")
         print("Please choose:")
         print("1. add new prescriptions")
-        print("2. delet prescriptions")
+        print("2. delete prescriptions")
         print("3. warning expiration")
-        print("4. Check for interactions between medications")
-        print("5. Export the medication history of a patient")
-        print("6. Search for a patient's medication records")
-        print("7. Logout")
+        print("4. check for interactions between medications")
+        print("5. export the medication history of a patient")
+        print("6. search for a patient's medication records")
+        print("7. logout")
         try:
             choice = int(input("Enter your choice: "))
-            if choice not in [1,2,3,4,5,6]:
+            if choice not in [1,2,3,4,5,6,7]:
                 raise ValueError
         except ValueError:
             print("Please input right number for choice")
@@ -173,21 +173,21 @@ def doctor_menu(doctor):
         if choice == 1:
             prescrptn_db.add_prescription()
         elif choice == 2:
-            prescrptn=input("please input prescrptn you want remove：")
+            prescrptn=input("please input prescrptn you want remove: ")
             prescrptn_db.remove_prescription(prescrptn)
         elif choice == 3:
             prescrptn_db.warning()
         elif choice == 4:
-            ID=input("please input patient id")
+            ID=input("please input patient id: ")
             report1=Report(ID,"")
             report1.check_drug_interactions(prescrptn_db)
         elif choice == 5:
-            ID = input("please input patient id")
+            ID = input("please input patient id: ")
             report2 = Report(ID, "")
             report2.generate_report(prescrptn_db)
         elif choice == 6:
-            ID = input("please input patient id")
-            med_name=input("please int medicine name")
+            ID = input("please input patient id: ")
+            med_name=input("please input medicine name: ")
             report3 = Report(ID, "")
             report3.search_medication_history(med_name,prescrptn_db)
         elif choice == 7:

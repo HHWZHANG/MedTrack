@@ -92,7 +92,7 @@ class Prescrptn_db(Prescription):
         return True
 
     def warning(self):
-        date_input = input("Enter now time (yyyy-mm-dd): ")
+        date_input = input("Enter current time (yyyy-mm-dd): ")
         now_time = datetime.strptime(date_input, "%Y-%m-%d")
         flag=True
         for prescrptn in self.prescrptn_array:
