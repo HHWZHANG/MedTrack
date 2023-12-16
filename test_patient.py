@@ -3,11 +3,13 @@ import unittest
 import unittest.mock
 from unittest.mock import Mock
 from unittest import mock
+from unittest.mock import patch
 
 from patient.reminder import Reminder
 from patient import Patient
+from patient import reminder
 from patient.medication import Medication, Med_db
-from unittest.mock import patch
+
 from datetime import datetime, timedelta
 
 
