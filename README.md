@@ -64,6 +64,9 @@ Search_history: Searches through the medication history.
 ### Coverage
 ![image](./cover.png)
 
+### PyPi link
+https://pypi.org/project/MedTrack/0.0.1/
+
 ### Authors
 Hanwen Zhang
 
